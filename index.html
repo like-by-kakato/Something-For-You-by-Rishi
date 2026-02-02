@@ -223,10 +223,3 @@ noBtn.style.display="none";
 
 </body>
 </html>
-startBtn.addEventListener("click", () => {
-  const playPromise = music.play();
-  if (playPromise !== undefined) {
-    playPromise.then(() => overlay.style.display="none")
-               .catch(() => alert("Tap again to start music 🎵"));
-  }
-});
