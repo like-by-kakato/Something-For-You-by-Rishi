@@ -120,15 +120,14 @@ border-radius:40px;
 
 <body>
 
-<!-- UPDATED SAD LOVE MUSIC -->
-<audio id="bgMusic" loop>
-  <source src="https://cdn.jsdelivr.net/gh/igotrishu/proposal-music/audio.mp3" type="audio/mpeg">
-</audio>
-
-<!-- TAP TO START MUSIC -->
+<!-- MOBILE-FRIENDLY SAD LOVE MUSIC -->
 <div id="musicOverlay">
   <button id="startBtn">Tap to start music 💔</button>
 </div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.jsdelivr.net/gh/igotrishu/proposal-music/audio.mp3" type="audio/mpeg">
+</audio>
 
 <div class="card">
 <h1>Will You Be My Valentine  
@@ -186,16 +185,20 @@ const music=document.getElementById("bgMusic");
 const overlay=document.getElementById("musicOverlay");
 const startBtn=document.getElementById("startBtn");
 
-// MOBILE-FRIENDLY MUSIC PLAY
-startBtn.addEventListener("click", async () => {
-  try {
-    await music.play(); // async ensures mobile plays
-    overlay.style.display = "none"; // hide overlay
-  } catch(e){
-    alert("Tap again to start music! 🎵");
+// ✅ MOBILE-FRIENDLY MUSIC PLAY + OVERLAY HIDE
+startBtn.addEventListener("click", () => {
+  const playPromise = music.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      overlay.style.display="none"; // overlay hide only after music plays
+    })
+    .catch(() => {
+      alert("Tap again to start music 🎵");
+    });
   }
 });
 
+// ✅ NO BUTTON ESCAPE FUN
 noBtn.onclick=()=>{
 count++;
 if(count<=9){
@@ -210,6 +213,7 @@ document.querySelector(".card").appendChild(p);
 }
 };
 
+// ✅ YES BUTTON SHOW MESSAGE
 yesBtn.onclick=()=>{
 msg.style.display="block";
 yesBtn.style.display="none";
